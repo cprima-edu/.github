@@ -1,0 +1,38 @@
+{
+  "updated": "2025-10-28",
+  "courses": [
+    {
+      "id": "coded-agents",
+      "title": "Coded Agents Fundamentals",
+      "repo": "https://github.com/cprima-edu/coded-agents",
+      "version": "1.0.0",
+      "level": "intermediate",
+      "language": "en",
+      "description": "Learn to build AI agents with UiPath: hands-on tutorials, sample projects, and educational resources for developing coded automation agents using Python, LangChain, and the UiPath SDK",
+      "topics": [
+        "education",
+        "course",
+        "agents",
+        "ai",
+        "uipath",
+        "python"
+      ]
+    },
+    {
+      "id": "reframework-advanced",
+      "title": "REFramework Advanced",
+      "repo": "https://github.com/cprima-edu/reframework-advanced",
+      "version": "1.0.0",
+      "level": "advanced",
+      "language": "en",
+      "description": "Advanced RPA patterns and architectures: master sophisticated automation strategies, error handling patterns, state machine design, and enterprise-scale RPA solutions beyond the standard REFramework",
+      "topics": [
+        "education",
+        "course",
+        "rpa",
+        "reframework",
+        "patterns"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cprima-edu Course Catalog</title>
+    <link rel="stylesheet" href="assets/catalog.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>cprima-edu Course Catalog</h1>
+            <p class="subtitle">Educational resources and training programs for AI-powered automation</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="filters">
+            <button class="filter-btn active" data-filter="all">All Courses</button>
+            <button class="filter-btn" data-filter="beginner">Beginner</button>
+            <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+            <button class="filter-btn" data-filter="advanced">Advanced</button>
+        </section>
+
+        <section id="courses" class="courses-grid">
+            <!-- Courses will be loaded here by JavaScript -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>cprima Education &copy; 2025 | <a href="https://github.com/cprima-edu">GitHub Organization</a></p>
+        </div>
+    </footer>
+
+    <script src="assets/catalog.js"></script>
+</body>
+</html>

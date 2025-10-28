@@ -1,0 +1,80 @@
+name: Sync Course Catalog
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
+  workflow_dispatch:  # Manual trigger
+  repository_dispatch:
+    types: [catalog-updated]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout .github repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Fetch catalog from edu-faculty
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Clone edu-faculty repo (requires access to private repo)
+          gh repo clone cprima-edu/edu-faculty edu-faculty-temp
+
+      - name: Convert YAML to JSON
+        run: |
+          python << 'EOF'
+          import yaml
+          import json
+          from datetime import datetime
+
+          # Read courses.yaml from edu-faculty
+          with open('edu-faculty-temp/catalog/courses.yaml', 'r') as f:
+              courses = yaml.safe_load(f)
+
+          # Filter only active courses
+          active_courses = [c for c in courses if c.get('status') == 'active']
+
+          # Create catalog.json
+          catalog = {
+              'updated': datetime.now().strftime('%Y-%m-%d'),
+              'courses': active_courses
+          }
+
+          # Write to docs/catalog.json
+          with open('docs/catalog.json', 'w') as f:
+              json.dump(catalog, f, indent=2)
+
+          print(f"✓ Generated catalog.json with {len(active_courses)} active courses")
+          EOF
+
+      - name: Cleanup temp directory
+        run: rm -rf edu-faculty-temp
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add docs/catalog.json
+
+          if git diff --staged --quiet; then
+            echo "No changes to catalog"
+          else
+            git commit -m "chore: sync course catalog from edu-faculty
+
+          🤖 Automated catalog sync from edu-faculty/catalog/courses.yaml"
+            git push
+          fi
